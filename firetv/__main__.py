@@ -160,6 +160,12 @@ def running_apps(device_id):
         abort(404)
     return jsonify(running_apps=devices[device_id].running_apps)
 
+@app.route('/devices/properties/<device_id>', methods=['GET'])
+def get_properties(device_id):
+    """ Get device state via HTTP GET. """
+    if device_id not in devices:
+        return jsonify(success=False)
+    return jsonify(properties=devices[device_id].get_properties())
 
 @app.route('/devices/<device_id>/apps/state/<app_id>', methods=['GET'])
 def get_app_state(device_id, app_id):
